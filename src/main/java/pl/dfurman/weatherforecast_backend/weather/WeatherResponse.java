@@ -61,10 +61,6 @@ public class WeatherResponse {
         this.date = date;
     }
 
-//    public Map<String, ArrayList<Map<String, Double>>> getMinMaxTemperatures() {
-//        return hourly.getMaxMinTemperaturesOfDays();
-//    }
-
     public void setMinMaxTemperatures(Map<String, ArrayList<Map<String, Double>>> minMaxTemperatures) {
         this.minMaxTemperatures = minMaxTemperatures;
     }
@@ -82,10 +78,10 @@ public class WeatherResponse {
         int days = this.hourly.getTemperature_2m().length / 24;
         double[] daylightDuration = this.daily.getDaylight_duration();
         for (int i = 0; i < days; i++) {
-            String date = LocalDate.parse(this.hourly.getTime()[i*24], formatter).toString();
+            String date = LocalDate.parse(this.hourly.getTime()[i * 24], formatter).toString();
             ArrayList<Double> allTemperaturesOfDay = new ArrayList<>();
-            for (int j = 0; j< 24; j++) {
-                allTemperaturesOfDay.add(this.hourly.getTemperature_2m()[i*24 + j]);
+            for (int j = 0; j < 24; j++) {
+                allTemperaturesOfDay.add(this.hourly.getTemperature_2m()[i * 24 + j]);
             }
             int finalI = i;
             Double daylightDurationForDay = daylightDuration[finalI] / 3600;
@@ -110,39 +106,4 @@ public class WeatherResponse {
     public void setWeather_code(int[] weather_code) {
         this.weather_code = weather_code;
     }
-
-    //    @JsonIgnoreProperties(ignoreUnknown = true)
-//    public static class Hourly {
-//        private String[] time;
-//        private double[] temperature_2m;
-//
-//        public double[] getTemperature_2m() {
-//            return temperature_2m;
-//        }
-//
-//        public void setTemperature_2m(double[] temperature_2m) {
-//            this.temperature_2m = temperature_2m;
-//        }
-//
-//        public String[] getTime() {
-//            return time;
-//        }
-//
-//        public void setTime(String[] time) {
-//            this.time = time;
-//        }
-//    }
-
-//    @JsonIgnoreProperties(ignoreUnknown = true)
-//    public static class Current {
-//        private String time;
-//
-//        public String getTime() {
-//            return time;
-//        }
-//
-//        public void setTime(String time) {
-//            this.time = time;
-//        }
-//    }
 }

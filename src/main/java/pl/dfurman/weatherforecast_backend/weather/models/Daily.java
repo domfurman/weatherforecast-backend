@@ -30,6 +30,4 @@ public class Daily {
     public void setWeather_code(int[] weather_code) {
         this.weather_code = weather_code;
     }
-
-    //    public Map<String, >
 }

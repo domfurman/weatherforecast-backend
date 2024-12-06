@@ -1,5 +1,7 @@
 package pl.dfurman.weatherforecast_backend.weather;
 
+import pl.dfurman.weatherforecast_backend.weather.models.Hourly;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,12 +11,10 @@ public class Weather {
     private Map<String, ArrayList<Map<String, Double>>> dailyWeatherDetails;
     private int[] weatherCode;
 
-
     public Weather(LocalDate date, Map<String, ArrayList<Map<String, Double>>> minMaxTemperatures, int[] weatherCode) {
         this.date = date;
         this.dailyWeatherDetails = minMaxTemperatures;
         this.weatherCode = weatherCode;
-
     }
 
     public LocalDate getDate() {
