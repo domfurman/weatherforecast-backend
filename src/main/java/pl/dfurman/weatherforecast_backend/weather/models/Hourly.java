@@ -10,7 +10,8 @@ import java.util.*;
 public  class Hourly {
     private String[] time;
     private double[] temperature_2m;
-    private Daily daily;
+    private double[] surface_pressure;
+
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     public double[] getTemperature_2m() {
@@ -29,20 +30,11 @@ public  class Hourly {
         this.time = time;
     }
 
-//    public Map<String, ArrayList<Double>> getMaxMinTemperaturesOfDays() {
-//        Map<String, ArrayList<Double>> temps = new TreeMap<>();
-//        int days = temperature_2m.length / 24;
-//        for (int i = 0; i < days; i++) {
-//            String date = LocalDate.parse(time[i*24], formatter).toString();
-//            ArrayList<Double> allTemperaturesOfDay = new ArrayList<>();
-//            for (int j = 0; j< 24; j++) {
-//                allTemperaturesOfDay.add(temperature_2m[i*24 + j]);
-//            }
-//            temps.put(date, new ArrayList<>(Arrays.asList(
-//                    Collections.min(allTemperaturesOfDay),
-//                    Collections.max(allTemperaturesOfDay))));
-//        }
-//        return temps;
-//    }
+    public double[] getSurface_pressure() {
+        return surface_pressure;
+    }
 
+    public void setSurface_pressure(double[] surface_pressure) {
+        this.surface_pressure = surface_pressure;
+    }
 }

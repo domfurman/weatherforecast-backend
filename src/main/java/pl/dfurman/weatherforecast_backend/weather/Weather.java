@@ -1,20 +1,27 @@
 package pl.dfurman.weatherforecast_backend.weather;
 
-import pl.dfurman.weatherforecast_backend.weather.models.Hourly;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import pl.dfurman.weatherforecast_backend.weather.models.DailyWeatherDetails;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Weather {
     private LocalDate date;
-    private Map<String, ArrayList<Map<String, Double>>> dailyWeatherDetails;
+    private Map<String, DailyWeatherDetails> dailyWeatherDetails;
     private int[] weatherCode;
+    private Map<String, Double> weekSummary;
 
-    public Weather(LocalDate date, Map<String, ArrayList<Map<String, Double>>> minMaxTemperatures, int[] weatherCode) {
+    public Weather(LocalDate date, Map<String, DailyWeatherDetails> dailyWeatherDetails, int[] weatherCode) {
         this.date = date;
-        this.dailyWeatherDetails = minMaxTemperatures;
+        this.dailyWeatherDetails = dailyWeatherDetails;
         this.weatherCode = weatherCode;
+    }
+
+    public Weather(Map<String, Double> weekSummary) {
+        this.weekSummary = weekSummary;
     }
 
     public LocalDate getDate() {
@@ -25,11 +32,11 @@ public class Weather {
         this.date = date;
     }
 
-    public Map<String, ArrayList<Map<String, Double>>> getDailyWeatherDetails() {
+    public Map<String, DailyWeatherDetails> getDailyWeatherDetails() {
         return dailyWeatherDetails;
     }
 
-    public void setDailyWeatherDetails(Map<String, ArrayList<Map<String, Double>>> dailyWeatherDetails) {
+    public void setDailyWeatherDetails(Map<String, DailyWeatherDetails> dailyWeatherDetails) {
         this.dailyWeatherDetails = dailyWeatherDetails;
     }
 
@@ -39,5 +46,13 @@ public class Weather {
 
     public void setWeatherCode(int[] weatherCode) {
         this.weatherCode = weatherCode;
+    }
+
+    public Map<String, Double> getWeekSummary() {
+        return weekSummary;
+    }
+
+    public void setWeekSummary(Map<String, Double> weekSummary) {
+        this.weekSummary = weekSummary;
     }
 }

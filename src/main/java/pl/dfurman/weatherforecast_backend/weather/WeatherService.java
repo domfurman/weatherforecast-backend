@@ -16,7 +16,7 @@ public class WeatherService {
     public Weather getForecastFor7Days(double latitude, double longitude) {
         String endpoint = String.format(
                 Locale.US,
-                "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&daily=weather_code&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=daylight_duration",
+                "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&daily=weather_code,temperature_2m_max,temperature_2m_min,sunshine_duration&current",
                 latitude, longitude
         );
 
@@ -32,9 +32,45 @@ public class WeatherService {
             WeatherResponse weatherResponse = mapper.readValue(response.body(), WeatherResponse.class);
             return new Weather(
                     weatherResponse.getDate(),
-                    weatherResponse.getMinMaxTemperatures(),
-                    weatherResponse.getWeather_code()
+                    Utils.calculateDailyDetails(
+                            weatherResponse.getDate(),
+                            weatherResponse.getDaily().getTemperature_2m_min(),
+                            weatherResponse.getDaily().getTemperature_2m_max(),
+                            weatherResponse.getDaily().getSunshine_duration()
+                    ),
+
+                    weatherResponse.getDaily().getWeather_code()
             );
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Weather getWeekSummary(double latitude, double longitude) {
+        String endpoint = String.format(
+                Locale.US,
+                "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&daily=sunshine_duration,temperature_2m_max,temperature_2m_min&hourly=surface_pressure",
+                latitude, longitude
+        );
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(endpoint))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            ObjectMapper mapper = new ObjectMapper();
+            WeatherResponse weatherResponse = mapper.readValue(response.body(), WeatherResponse.class);
+            return new Weather(
+                    Utils.calculateWeekSummary(
+                            weatherResponse.getDaily().getTemperature_2m_min(),
+                            weatherResponse.getDaily().getTemperature_2m_max(),
+                            weatherResponse.getHourly().getSurface_pressure(),
+                            weatherResponse.getDaily().getSunshine_duration())
+                    );
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;

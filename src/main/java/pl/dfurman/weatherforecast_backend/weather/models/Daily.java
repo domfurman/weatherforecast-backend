@@ -1,11 +1,11 @@
 package pl.dfurman.weatherforecast_backend.weather.models;
 
-import java.util.Map;
-
 public class Daily {
     private String[] time;
-    private double[] daylight_duration;
+    private double[] sunshine_duration;
     private int[] weather_code;
+    private double[] temperature_2m_max;
+    private double[] temperature_2m_min;
 
     public String[] getTime() {
         return time;
@@ -15,12 +15,12 @@ public class Daily {
         this.time = time;
     }
 
-    public double[] getDaylight_duration() {
-        return daylight_duration;
+    public double[] getSunshine_duration() {
+        return sunshine_duration;
     }
 
-    public void setDaylight_duration(double[] daylight_duration) {
-        this.daylight_duration = daylight_duration;
+    public void setSunshine_duration(double[] sunshine_duration) {
+        this.sunshine_duration = sunshine_duration;
     }
 
     public int[] getWeather_code() {
@@ -29,5 +29,21 @@ public class Daily {
 
     public void setWeather_code(int[] weather_code) {
         this.weather_code = weather_code;
+    }
+
+    public double[] getTemperature_2m_max() {
+        return temperature_2m_max;
+    }
+
+    public void setTemperature_2m_max(double[] temperature_2m_max) {
+        this.temperature_2m_max = temperature_2m_max;
+    }
+
+    public double[] getTemperature_2m_min() {
+        return temperature_2m_min;
+    }
+
+    public void setTemperature_2m_min(double[] temperature_2m_min) {
+        this.temperature_2m_min = temperature_2m_min;
     }
 }
