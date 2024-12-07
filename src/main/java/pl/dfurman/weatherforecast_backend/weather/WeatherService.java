@@ -36,10 +36,9 @@ public class WeatherService {
                             weatherResponse.getDate(),
                             weatherResponse.getDaily().getTemperature_2m_min(),
                             weatherResponse.getDaily().getTemperature_2m_max(),
-                            weatherResponse.getDaily().getSunshine_duration()
-                    ),
-
-                    weatherResponse.getDaily().getWeather_code()
+                            weatherResponse.getDaily().getSunshine_duration(),
+                            weatherResponse.getDaily().getWeather_code()
+                    )
             );
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

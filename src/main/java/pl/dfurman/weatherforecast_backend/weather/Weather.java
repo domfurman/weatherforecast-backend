@@ -12,13 +12,12 @@ import java.util.Objects;
 public class Weather {
     private LocalDate date;
     private Map<String, DailyWeatherDetails> dailyWeatherDetails;
-    private int[] weatherCode;
     private Map<String, Object> weekSummary;
 
-    public Weather(LocalDate date, Map<String, DailyWeatherDetails> dailyWeatherDetails, int[] weatherCode) {
+    public Weather(LocalDate date, Map<String, DailyWeatherDetails> dailyWeatherDetails) {
         this.date = date;
         this.dailyWeatherDetails = dailyWeatherDetails;
-        this.weatherCode = weatherCode;
+
     }
 
     public Weather(Map<String, Object> weekSummary) {
@@ -39,14 +38,6 @@ public class Weather {
 
     public void setDailyWeatherDetails(Map<String, DailyWeatherDetails> dailyWeatherDetails) {
         this.dailyWeatherDetails = dailyWeatherDetails;
-    }
-
-    public int[] getWeatherCode() {
-        return weatherCode;
-    }
-
-    public void setWeatherCode(int[] weatherCode) {
-        this.weatherCode = weatherCode;
     }
 
     public Map<String, Object> getWeekSummary() {

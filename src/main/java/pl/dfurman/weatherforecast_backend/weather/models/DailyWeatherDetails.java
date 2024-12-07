@@ -4,11 +4,13 @@ public class DailyWeatherDetails {
     private double minTemperature;
     private double maxTemperature;
     private double generatedEnergy;
+    private int weatherCode;
 
-    public DailyWeatherDetails(double minTemperature, double maxTemperature, double generatedEnergy) {
+    public DailyWeatherDetails(double minTemperature, double maxTemperature, double generatedEnergy, int weatherCode) {
         this.minTemperature = minTemperature;
         this.maxTemperature = maxTemperature;
         this.generatedEnergy = generatedEnergy;
+        this.weatherCode = weatherCode;
     }
 
     public double getMinTemperature() {
@@ -33,5 +35,13 @@ public class DailyWeatherDetails {
 
     public void setGeneratedEnergy(double generatedEnergy) {
         this.generatedEnergy = generatedEnergy;
+    }
+
+    public int getWeatherCode() {
+        return weatherCode;
+    }
+
+    public void setWeatherCode(int weatherCode) {
+        this.weatherCode = weatherCode;
     }
 }

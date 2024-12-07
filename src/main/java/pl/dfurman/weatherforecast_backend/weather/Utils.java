@@ -22,7 +22,8 @@ public class Utils {
             LocalDate startDate,
             double[] minTemperatures,
             double[] maxTemperatures,
-            double[] sunshineDurations) {
+            double[] sunshineDurations,
+            int[] weatherCodes) {
         Map<String, DailyWeatherDetails> dailyDetails = new TreeMap<>();
         for (int i = 0; i < minTemperatures.length; i++) {
             Double sunshineDurationForDay = sunshineDurations[i] / 3600;
@@ -33,7 +34,8 @@ public class Utils {
             dailyDetails.put(date.toString(), new DailyWeatherDetails(
                     minTemperatures[i],
                     maxTemperatures[i],
-                    generatedEnergyRounded
+                    generatedEnergyRounded,
+                    weatherCodes[i]
             ));
         }
         return dailyDetails;
