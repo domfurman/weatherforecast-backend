@@ -6,6 +6,7 @@ public class Daily {
     private int[] weather_code;
     private double[] temperature_2m_max;
     private double[] temperature_2m_min;
+    private double[] precipitation_sum;
 
     public String[] getTime() {
         return time;
@@ -45,5 +46,13 @@ public class Daily {
 
     public void setTemperature_2m_min(double[] temperature_2m_min) {
         this.temperature_2m_min = temperature_2m_min;
+    }
+
+    public double[] getPrecipitation_sum() {
+        return precipitation_sum;
+    }
+
+    public void setPrecipitation_sum(double[] precipitation_sum) {
+        this.precipitation_sum = precipitation_sum;
     }
 }

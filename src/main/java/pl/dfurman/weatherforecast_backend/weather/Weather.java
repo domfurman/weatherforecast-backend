@@ -6,13 +6,14 @@ import pl.dfurman.weatherforecast_backend.weather.models.DailyWeatherDetails;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Weather {
     private LocalDate date;
     private Map<String, DailyWeatherDetails> dailyWeatherDetails;
     private int[] weatherCode;
-    private Map<String, Double> weekSummary;
+    private Map<String, Object> weekSummary;
 
     public Weather(LocalDate date, Map<String, DailyWeatherDetails> dailyWeatherDetails, int[] weatherCode) {
         this.date = date;
@@ -20,7 +21,7 @@ public class Weather {
         this.weatherCode = weatherCode;
     }
 
-    public Weather(Map<String, Double> weekSummary) {
+    public Weather(Map<String, Object> weekSummary) {
         this.weekSummary = weekSummary;
     }
 
@@ -48,11 +49,11 @@ public class Weather {
         this.weatherCode = weatherCode;
     }
 
-    public Map<String, Double> getWeekSummary() {
+    public Map<String, Object> getWeekSummary() {
         return weekSummary;
     }
 
-    public void setWeekSummary(Map<String, Double> weekSummary) {
+    public void setWeekSummary(Map<String, Object> weekSummary) {
         this.weekSummary = weekSummary;
     }
 }

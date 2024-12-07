@@ -50,7 +50,7 @@ public class WeatherService {
     public Weather getWeekSummary(double latitude, double longitude) {
         String endpoint = String.format(
                 Locale.US,
-                "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&daily=sunshine_duration,temperature_2m_max,temperature_2m_min&hourly=surface_pressure",
+                "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&daily=sunshine_duration,temperature_2m_max,temperature_2m_min,precipitation_sum&hourly=surface_pressure",
                 latitude, longitude
         );
 
@@ -69,7 +69,8 @@ public class WeatherService {
                             weatherResponse.getDaily().getTemperature_2m_min(),
                             weatherResponse.getDaily().getTemperature_2m_max(),
                             weatherResponse.getHourly().getSurface_pressure(),
-                            weatherResponse.getDaily().getSunshine_duration())
+                            weatherResponse.getDaily().getSunshine_duration(),
+                            weatherResponse.getDaily().getPrecipitation_sum())
                     );
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

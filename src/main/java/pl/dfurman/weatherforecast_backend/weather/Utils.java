@@ -25,8 +25,8 @@ public class Utils {
             double[] sunshineDurations) {
         Map<String, DailyWeatherDetails> dailyDetails = new TreeMap<>();
         for (int i = 0; i < minTemperatures.length; i++) {
-            Double daylightDurationForDay = sunshineDurations[i] / 3600;
-            Double generatedEnergy = calculateGeneratedEnergy(daylightDurationForDay);
+            Double sunshineDurationForDay = sunshineDurations[i] / 3600;
+            Double generatedEnergy = calculateGeneratedEnergy(sunshineDurationForDay);
             double generatedEnergyRounded = Math.round(generatedEnergy * 10000.0) / 10000.0;
 
             LocalDate date = startDate.plusDays(i);
@@ -53,23 +53,31 @@ public class Utils {
     }
 
     public static double calculateAverageSunshineDuration(double[] sunshineDuration) {
-        return Arrays.stream(sunshineDuration).average().orElse(Double.NaN);
+        return Math.round((Arrays.stream(sunshineDuration).average().orElse(Double.NaN) / 3600.0) * 100.0) / 100.0;
     }
 
-    public static Map<String, Double> calculateWeekSummary(
+    public static boolean isWeekRainy(double[] precipitationSum) {
+        long rainyDays = Arrays.stream(precipitationSum).filter(p -> p > 0).count();
+        return rainyDays >= 4;
+    }
+
+    public static Map<String, Object> calculateWeekSummary(
             double[] minTemperatures,
             double[] maxTemperatures,
             double[] surfacePressure,
-            double[] sunshineDuration) {
+            double[] sunshineDuration,
+            double[] precipitationSum) {
         Double averagePressure = calculateAveragePressure(surfacePressure);
         Double averageSunshineDuration = calculateAverageSunshineDuration(sunshineDuration);
         ArrayList<Double> extremeTemperatures = calculateExtremeTemperatures(minTemperatures, maxTemperatures);
+        boolean isWeekRainy = isWeekRainy(precipitationSum);
 
         return new HashMap<>() {{
             put("averagePressure", averagePressure);
             put("averageSunshineDuration", averageSunshineDuration);
             put("lowestTemperature", extremeTemperatures.get(0));
             put("highestTemperature", extremeTemperatures.get(1));
+            put("isWeekRainy", isWeekRainy);
         }};
     }
 }
