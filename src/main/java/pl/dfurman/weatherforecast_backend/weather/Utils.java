@@ -32,8 +32,8 @@ public class Utils {
 
             LocalDate date = startDate.plusDays(i);
             dailyDetails.put(date.toString(), new DailyWeatherDetails(
-                    minTemperatures[i],
-                    maxTemperatures[i],
+                    Math.round(minTemperatures[i]),
+                    Math.round(maxTemperatures[i]),
                     generatedEnergyRounded,
                     weatherCodes[i]
             ));
@@ -50,8 +50,11 @@ public class Utils {
         ));
     }
 
-    public static double calculateAveragePressure(double[] surfacePressure) {
-        return Arrays.stream(surfacePressure).average().orElse(Double.NaN);
+    // Using sea-level pressure instead of surface pressure for calculating the average pressure.
+    // Sea-level pressure is more consistent and independent of altitude, making it suitable
+    // for standardizing pressure values across different locations.
+    public static double calculateAveragePressure(double[] pressure) {
+        return Math.round((Arrays.stream(pressure).average().orElse(Double.NaN) * 100.0)) / 100.0;
     }
 
     public static double calculateAverageSunshineDuration(double[] sunshineDuration) {
@@ -66,10 +69,10 @@ public class Utils {
     public static Map<String, Object> calculateWeekSummary(
             double[] minTemperatures,
             double[] maxTemperatures,
-            double[] surfacePressure,
+            double[] pressure,
             double[] sunshineDuration,
             double[] precipitationSum) {
-        Double averagePressure = calculateAveragePressure(surfacePressure);
+        Double averagePressure = calculateAveragePressure(pressure);
         Double averageSunshineDuration = calculateAverageSunshineDuration(sunshineDuration);
         ArrayList<Double> extremeTemperatures = calculateExtremeTemperatures(minTemperatures, maxTemperatures);
         boolean isWeekRainy = isWeekRainy(precipitationSum);
@@ -77,8 +80,8 @@ public class Utils {
         return new HashMap<>() {{
             put("averagePressure", averagePressure);
             put("averageSunshineDuration", averageSunshineDuration);
-            put("lowestTemperature", extremeTemperatures.get(0));
-            put("highestTemperature", extremeTemperatures.get(1));
+            put("lowestTemperature", Math.round(extremeTemperatures.get(0)));
+            put("highestTemperature", Math.round(extremeTemperatures.get(1)));
             put("isWeekRainy", isWeekRainy);
         }};
     }
