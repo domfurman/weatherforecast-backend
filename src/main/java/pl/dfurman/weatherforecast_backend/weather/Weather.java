@@ -13,11 +13,12 @@ public class Weather {
     private LocalDate date;
     private Map<String, DailyWeatherDetails> dailyWeatherDetails;
     private Map<String, Object> weekSummary;
+    private int currentTemperature;
 
-    public Weather(LocalDate date, Map<String, DailyWeatherDetails> dailyWeatherDetails) {
+    public Weather(LocalDate date, int currentTemperature, Map<String, DailyWeatherDetails> dailyWeatherDetails) {
         this.date = date;
+        this.currentTemperature = currentTemperature;
         this.dailyWeatherDetails = dailyWeatherDetails;
-
     }
 
     public Weather(Map<String, Object> weekSummary) {
@@ -46,5 +47,13 @@ public class Weather {
 
     public void setWeekSummary(Map<String, Object> weekSummary) {
         this.weekSummary = weekSummary;
+    }
+
+    public int getCurrentTemperature() {
+        return currentTemperature;
+    }
+
+    public void setCurrentTemperature(int currentTemperature) {
+        this.currentTemperature = currentTemperature;
     }
 }

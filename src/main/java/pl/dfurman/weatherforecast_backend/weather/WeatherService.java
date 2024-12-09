@@ -9,6 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Locale;
+import java.util.Map;
 
 @Service
 public class WeatherService {
@@ -16,7 +17,7 @@ public class WeatherService {
     public Weather getForecastFor7Days(double latitude, double longitude) {
         String endpoint = String.format(
                 Locale.US,
-                "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&daily=weather_code,temperature_2m_max,temperature_2m_min,sunshine_duration&current",
+                "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&daily=weather_code,temperature_2m_max,temperature_2m_min,sunshine_duration&current=temperature_2m",
                 latitude, longitude
         );
 
@@ -32,6 +33,7 @@ public class WeatherService {
             WeatherResponse weatherResponse = mapper.readValue(response.body(), WeatherResponse.class);
             return new Weather(
                     weatherResponse.getDate(),
+                    weatherResponse.getCurrent().getTemperature_2m(),
                     Utils.calculateDailyDetails(
                             weatherResponse.getDate(),
                             weatherResponse.getDaily().getTemperature_2m_min(),
@@ -46,7 +48,7 @@ public class WeatherService {
         }
     }
 
-    public Weather getWeekSummary(double latitude, double longitude) {
+    public Map<String, Object> getWeekSummary(double latitude, double longitude) {
         String endpoint = String.format(
                 Locale.US,
                 "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&daily=sunshine_duration,temperature_2m_max,temperature_2m_min,precipitation_sum&hourly=pressure_msl",
@@ -63,14 +65,20 @@ public class WeatherService {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             ObjectMapper mapper = new ObjectMapper();
             WeatherResponse weatherResponse = mapper.readValue(response.body(), WeatherResponse.class);
-            return new Weather(
-                    Utils.calculateWeekSummary(
+            return Utils.calculateWeekSummary(
                             weatherResponse.getDaily().getTemperature_2m_min(),
                             weatherResponse.getDaily().getTemperature_2m_max(),
                             weatherResponse.getHourly().getPressure_msl(),
                             weatherResponse.getDaily().getSunshine_duration(),
-                            weatherResponse.getDaily().getPrecipitation_sum())
-                    );
+                            weatherResponse.getDaily().getPrecipitation_sum());
+//            return new Weather(
+//                    Utils.calculateWeekSummary(
+//                            weatherResponse.getDaily().getTemperature_2m_min(),
+//                            weatherResponse.getDaily().getTemperature_2m_max(),
+//                            weatherResponse.getHourly().getPressure_msl(),
+//                            weatherResponse.getDaily().getSunshine_duration(),
+//                            weatherResponse.getDaily().getPrecipitation_sum())
+//                    );
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;

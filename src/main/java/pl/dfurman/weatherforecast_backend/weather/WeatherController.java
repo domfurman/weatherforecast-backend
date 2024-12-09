@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class WeatherController {
@@ -21,7 +23,7 @@ public class WeatherController {
     }
 
     @GetMapping("/week-summary")
-    public Weather getWeekSummary(@RequestParam double latitude, @RequestParam double longitude) {
+    public Map<String, Object> getWeekSummary(@RequestParam double latitude, @RequestParam double longitude) {
         return weatherService.getWeekSummary(latitude, longitude);
     }
 }
