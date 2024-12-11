@@ -25,6 +25,9 @@ public class Weather {
         this.weekSummary = weekSummary;
     }
 
+    public Weather() {
+    }
+
     public LocalDate getDate() {
         return date;
     }

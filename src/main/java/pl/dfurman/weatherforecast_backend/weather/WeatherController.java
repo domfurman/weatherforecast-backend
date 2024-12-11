@@ -19,11 +19,17 @@ public class WeatherController {
 
     @GetMapping("/weather")
     public Weather getForecastFor7Days(@RequestParam double latitude, @RequestParam double longitude) {
+        if (!weatherService.isValidCoordinates(latitude, longitude)) {
+            throw new IllegalArgumentException("Invalid coordinates");
+        }
         return weatherService.getForecastFor7Days(latitude, longitude);
     }
 
     @GetMapping("/week-summary")
     public Map<String, Object> getWeekSummary(@RequestParam double latitude, @RequestParam double longitude) {
+        if (!weatherService.isValidCoordinates(latitude, longitude)) {
+            throw new IllegalArgumentException("Invalid coordinates");
+        }
         return weatherService.getWeekSummary(latitude, longitude);
     }
 }
