@@ -26,7 +26,7 @@ public class WeatherController {
     }
 
     @GetMapping("/week-summary")
-    public Map<String, Object> getWeekSummary(@RequestParam double latitude, @RequestParam double longitude) {
+    public Weather getWeekSummary(@RequestParam double latitude, @RequestParam double longitude) {
         if (!weatherService.isValidCoordinates(latitude, longitude)) {
             throw new IllegalArgumentException("Invalid coordinates");
         }

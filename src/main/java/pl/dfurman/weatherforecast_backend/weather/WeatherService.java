@@ -65,7 +65,7 @@ public class WeatherService {
         }
     }
 
-    public Map<String, Object> getWeekSummary(double latitude, double longitude) {
+    public Weather getWeekSummary(double latitude, double longitude) {
         if (!isValidCoordinates(latitude, longitude)) {
             throw new IllegalArgumentException("Invalid coordinates: Latitude must be between -90 and 90, and Longitude must be between -180 and 180");
         }
@@ -90,12 +90,14 @@ public class WeatherService {
             ObjectMapper mapper = new ObjectMapper();
             WeatherResponse weatherResponse = mapper.readValue(response.body(), WeatherResponse.class);
 
-            return Utils.calculateWeekSummary(
-                    weatherResponse.getDaily().getTemperature_2m_min(),
-                    weatherResponse.getDaily().getTemperature_2m_max(),
-                    weatherResponse.getHourly().getPressure_msl(),
-                    weatherResponse.getDaily().getSunshine_duration(),
-                    weatherResponse.getDaily().getPrecipitation_sum()
+            return new Weather(
+                    Utils.calculateWeekSummary(
+                            weatherResponse.getDaily().getTemperature_2m_min(),
+                            weatherResponse.getDaily().getTemperature_2m_max(),
+                            weatherResponse.getHourly().getPressure_msl(),
+                            weatherResponse.getDaily().getSunshine_duration(),
+                            weatherResponse.getDaily().getPrecipitation_sum()
+                    )
             );
 
         } catch (IOException e) {

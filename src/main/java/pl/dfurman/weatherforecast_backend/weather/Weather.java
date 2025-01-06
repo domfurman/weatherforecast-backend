@@ -1,6 +1,9 @@
 package pl.dfurman.weatherforecast_backend.weather;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import pl.dfurman.weatherforecast_backend.weather.models.DailyWeatherDetails;
 
 import java.time.LocalDate;
@@ -12,6 +15,7 @@ import java.util.Objects;
 public class Weather {
     private LocalDate date;
     private Map<String, DailyWeatherDetails> dailyWeatherDetails;
+    @JsonIgnore
     private Map<String, Object> weekSummary;
     private int currentTemperature;
 
@@ -44,6 +48,7 @@ public class Weather {
         this.dailyWeatherDetails = dailyWeatherDetails;
     }
 
+    @JsonAnyGetter
     public Map<String, Object> getWeekSummary() {
         return weekSummary;
     }
