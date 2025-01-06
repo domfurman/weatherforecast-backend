@@ -69,59 +69,6 @@ public class WeatherResponse {
         this.daily = daily;
     }
 
-//    public Map<String, ArrayList<Map<String, Double>>> getMinMaxTemperatures() {
-//        Map<String, ArrayList<Map<String, Double>>> temps = new TreeMap<>();
-//        int days = this.hourly.getTemperature_2m().length / 24;
-//        double[] daylightDuration = this.daily.getDaylight_duration();
-//        for (int i = 0; i < days; i++) {
-//            String date = LocalDate.parse(this.hourly.getTime()[i * 24], formatter).toString();
-//            ArrayList<Double> allTemperaturesOfDay = new ArrayList<>();
-//            for (int j = 0; j < 24; j++) {
-//                allTemperaturesOfDay.add(this.hourly.getTemperature_2m()[i * 24 + j]);
-//            }
-//            int finalI = i;
-//            Double daylightDurationForDay = daylightDuration[finalI] / 3600;
-//            Double generatedEnergy = Utils.calculateGeneratedEnergy(daylightDurationForDay);
-//            double generatedEnergyRounded = (double) Math.round(generatedEnergy * 10000.0) / 10000.0;
-//            temps.put(date, new ArrayList<>(Arrays.asList(
-//                    new HashMap<String, Double>() {{
-//                        put("minTemperature", Collections.min(allTemperaturesOfDay));
-//                        put("maxTemperature", Collections.max(allTemperaturesOfDay));
-//                        put("generatedEnergy", generatedEnergyRounded);
-//                    }}
-//            )));
-//
-//        }
-//        return temps;
-//    }
-
-//    public Map<String, ArrayList<Map<String, Double>>> getDailyDetails() {
-//        Map<String, ArrayList<Map<String, Double>>> dailyDetails = new TreeMap<>();
-//        int days = this.daily.getTemperature_2m_max().length;
-//        double[] minTemperatures = this.daily.getTemperature_2m_min();
-//        double[] maxTemperatures = this.daily.getTemperature_2m_max();
-//        double[] sunshineDuration = this.daily.getSunshine_duration();
-//
-//        for (int i = 0; i < days; i++) {
-//            int finalI = i;
-//            Double daylightDurationForDay = sunshineDuration[finalI] / 3600;
-//            Double generatedEnergy = Utils.calculateGeneratedEnergy(daylightDurationForDay);
-//            double generatedEnergyRounded = (double) Math.round(generatedEnergy * 10000.0) / 10000.0;
-//            ArrayList<Map<String, Double>> minMaxTemperaturesOfDay = new ArrayList<>(Arrays.asList(
-//                    new HashMap<String, Double>() {{
-//                        put("minTemperature", minTemperatures[finalI]);
-//                        put("maxTemperature", maxTemperatures[finalI]);
-//                        put("generatedEnergy", generatedEnergyRounded);
-//                    }}
-//            ));
-//            LocalDate date = this.getDate().plusDays(finalI);
-//            dailyDetails.put(date.toString(), minMaxTemperaturesOfDay);
-//        }
-//
-//        return dailyDetails;
-//    }
-
-
     public Map<String, ArrayList<Map<String, Double>>> getDailyDetails() {
         return dailyDetails;
     }
